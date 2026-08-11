@@ -1,6 +1,7 @@
 import "../css/profile.css";
 import { useState } from "react";
 import AlbumSpot from "../components/AlbumSpot";
+import AlbumSearch from "../components/AlbumSearch";
 import Add from "../assets/Add.svg";
 import Test from "../assets/test.jpg";
 
@@ -14,10 +15,15 @@ function Profile() {
       newAlbums[index - 1] = Test;
       return newAlbums;
     });
+    setSearchOpen(true);
   }
 
   function handleAddSomethingClick() {
     console.log("Add something clicked!");
+  }
+
+  function handleCloseSearch() {
+    setSearchOpen(false);
   }
 
   return (
@@ -31,6 +37,7 @@ function Profile() {
       </header>
 
       <section>
+        {searchOpen && <AlbumSearch onClose={handleCloseSearch} />}
         <div className="top-container">
           <div className="profile-info">
             <div className="profile-image"></div>
