@@ -11,6 +11,7 @@
 .top-container .favorites .album-spot {
   width: 100%;
   height: auto;
+  aspect-ratio: 1 / 1;
   flex-shrink: 1;
 }
 

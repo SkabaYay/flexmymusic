@@ -7,15 +7,21 @@ import Test from "../assets/test.jpg";
 
 function Profile() {
   const [albums, setAlbums] = useState([Add, Add, Add, Add, Add]);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
   function handleAlbumClick(index) {
+    setSelectedAlbum(index);
+    setSearchOpen(true);
+  }
+
+  function handleAlbumSelect(imageSrc) {
     setAlbums((currentAlbums) => {
       const newAlbums = [...currentAlbums];
-      newAlbums[index - 1] = Test;
+      newAlbums[selectedAlbum - 1] = imageSrc;
       return newAlbums;
     });
-    setSearchOpen(true);
+    setSearchOpen(false);
   }
 
   function handleAddSomethingClick() {
@@ -37,7 +43,12 @@ function Profile() {
       </header>
 
       <section>
-        {searchOpen && <AlbumSearch onClose={handleCloseSearch} />}
+        {searchOpen && (
+          <AlbumSearch
+            onClose={handleCloseSearch}
+            onAlbumSelect={handleAlbumSelect}
+          />
+        )}
         <div className="top-container">
           <div className="profile-info">
             <div className="profile-image"></div>

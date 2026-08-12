@@ -4,7 +4,7 @@ import { useState } from "react";
 import Loading from "../assets/Loading.svg";
 import Missing from "../assets/Missing.svg";
 
-function AlbumSearch({ onClose }) {
+function AlbumSearch({ onClose, onAlbumSelect }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
@@ -45,6 +45,11 @@ function AlbumSearch({ onClose }) {
     }
   }
 
+  function handleAlbumClick(e) {
+    const imageSrc = e.currentTarget.querySelector("img").src;
+    onAlbumSelect(imageSrc);
+  }
+
   return (
     <div className="album-search">
       <button id="close-button" onClick={onClose}>
@@ -63,7 +68,11 @@ function AlbumSearch({ onClose }) {
       <div className="albums">
         {results.map((album) => {
           return (
-            <div key={album.id} className="album">
+            <div
+              key={album.id}
+              className="album"
+              onClick={album.cover === undefined ? undefined : handleAlbumClick}
+            >
               <img
                 src={
                   album.cover === undefined ? Loading : album.cover || Missing
