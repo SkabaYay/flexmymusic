@@ -1,0 +1,41 @@
+@keyframes moveLeft {
+  from {
+    left: -20%;
+  }
+  to {
+    left: -0.1%;
+  }
+}
+
+.component-menu {
+  width: 20%;
+  height: 100vh;
+  position: fixed;
+  background-color: var(--primary-color);
+  border: 2px solid var(--secondary-color);
+  top: 6.8%;
+  left: -0.1%;
+  animation: moveLeft 0.5s ease-in;
+  padding: 1rem;
+}
+
+.component-menu #close-button {
+  position: absolute;
+  top: -0.5rem;
+  right: -1rem;
+  width: 30px;
+  height: 30px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: 1px solid var(--ternary-color);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.component-menu #close-button:hover {
+  cursor: pointer;
+  background-color: var(--ternary-color);
+}

@@ -2,6 +2,7 @@ import "../css/profile.css";
 import { useState } from "react";
 import AlbumSpot from "../components/AlbumSpot";
 import AlbumSearch from "../components/AlbumSearch";
+import ComponentMenu from "../components/ComponentMenu";
 import Add from "../assets/Add.svg";
 import Test from "../assets/test.jpg";
 
@@ -9,6 +10,7 @@ function Profile() {
   const [albums, setAlbums] = useState([Add, Add, Add, Add, Add]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [componentMenuOpen, setComponentMenuOpen] = useState(false);
 
   function handleAlbumClick(index) {
     setSelectedAlbum(index);
@@ -26,10 +28,15 @@ function Profile() {
 
   function handleAddSomethingClick() {
     console.log("Add something clicked!");
+    setComponentMenuOpen(true);
   }
 
   function handleCloseSearch() {
     setSearchOpen(false);
+  }
+
+  function handleCloseComponentMenu() {
+    setComponentMenuOpen(false);
   }
 
   return (
@@ -49,6 +56,10 @@ function Profile() {
             onAlbumSelect={handleAlbumSelect}
           />
         )}
+        {componentMenuOpen && (
+          <ComponentMenu onClose={handleCloseComponentMenu} />
+        )}
+
         <div className="top-container">
           <div className="profile-info">
             <div className="profile-image"></div>
