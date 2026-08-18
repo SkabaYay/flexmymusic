@@ -1,10 +1,11 @@
 import ComponentMenu from "./ComponentMenu";
 import "../css/Components.css";
 
-function Components() {
+function Components({ name, image }) {
   return (
     <div className="component">
-      <p>We are hon</p>
+      <img src={image} alt="component" />
+      <p>{name}</p>
     </div>
   );
 }

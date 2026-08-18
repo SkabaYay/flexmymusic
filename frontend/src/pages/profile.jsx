@@ -6,6 +6,8 @@ import ComponentMenu from "../components/ComponentMenu";
 import Add from "../assets/Add.svg";
 import Test from "../assets/test.jpg";
 
+const numberOfFavorites = 5;
+
 function Profile() {
   const [albums, setAlbums] = useState([Add, Add, Add, Add, Add]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
@@ -66,11 +68,11 @@ function Profile() {
             <p>User</p>
           </div>
           <div className="favorites">
-            {[1, 2, 3, 4, 5].map((number) => (
+            {Array.from({ length: numberOfFavorites }).map((_, number) => (
               <AlbumSpot
                 key={number}
                 id={number}
-                image={albums[number - 1]}
+                image={albums[number]}
                 onClick={() => handleAlbumClick(number)}
               />
             ))}
