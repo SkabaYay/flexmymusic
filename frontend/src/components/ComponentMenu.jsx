@@ -2,12 +2,13 @@ import "../css/ComponentMenu.css";
 import Components from "./Components";
 import { useState } from "react";
 import Seasons from "../assets/Seasons.svg";
+import Mood from "../assets/Mood.svg";
 import Missing from "../assets/Missing.svg";
 
 const ComponentList = [
   { name: "Seasons", image: Seasons },
-  { name: "test", image: Missing },
-  { name: "test", image: Missing },
+  { name: "Happy", image: Mood },
+  { name: "Sad", image: Mood },
   { name: "test", image: Missing },
 ];
 

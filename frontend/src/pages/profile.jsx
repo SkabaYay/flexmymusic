@@ -22,7 +22,7 @@ function Profile() {
   function handleAlbumSelect(imageSrc) {
     setAlbums((currentAlbums) => {
       const newAlbums = [...currentAlbums];
-      newAlbums[selectedAlbum - 1] = imageSrc;
+      newAlbums[selectedAlbum] = imageSrc;
       return newAlbums;
     });
     setSearchOpen(false);
