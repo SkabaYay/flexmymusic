@@ -66,26 +66,35 @@ function AlbumSearch({ onClose, onAlbumSelect }) {
         />
       </form>
       <div className="albums">
-        {results.map((album) => {
-          return (
-            <div
-              key={album.id}
-              className="album"
-              onClick={album.cover === undefined ? undefined : handleAlbumClick}
-            >
-              <img
-                src={
-                  album.cover === undefined ? Loading : album.cover || Missing
+        {loading ? (
+          <p>Loading albums...</p>
+        ) : results.length === 0 ? (
+          <p>No albums found</p>
+        ) : (
+          results.map((album) => {
+            return (
+              <div
+                key={album.id}
+                className="album"
+                onClick={
+                  album.cover === undefined ? undefined : handleAlbumClick
                 }
-                alt={album.title}
-              />
-              <div className="album-info">
-                <p>{album.title}</p>
-                <p>{album.artist}</p>
+              >
+                <img
+                  src={
+                    album.cover === undefined ? Loading : album.cover || Missing
+                  }
+                  alt={album.title}
+                />
+
+                <div className="album-info">
+                  <p>{album.title}</p>
+                  <p>{album.artist}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );
