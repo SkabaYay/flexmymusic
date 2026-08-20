@@ -24,11 +24,15 @@ function Profile() {
   const [containerHeight, setContainerHeight] = useState(0);
 
   const [componentMenuOpen, setComponentMenuOpen] = useState(false);
-  const [components, setComponents] = useState([]);
-  const [layout, setLayout] = useState([
-    { i: "a", x: 0, y: 0, w: 1, h: 9 },
-    { i: "b", x: 1, y: 0, w: 1, h: 9 },
-  ]);
+  const [layout, setLayout] = useState([{ i: "b", x: 1, y: 0, w: 1, h: 8.5 }]);
+
+  const dropConfig = {
+    enabled: true,
+    defaultItem: {
+      w: 1,
+      h: 8.5,
+    },
+  };
 
   function handleAlbumClick(index) {
     setSelectedAlbum(index);
@@ -45,7 +49,6 @@ function Profile() {
   }
 
   function handleAddSomethingClick() {
-    console.log("Add something clicked!");
     setComponentMenuOpen(true);
   }
 
@@ -55,6 +58,23 @@ function Profile() {
 
   function handleCloseComponentMenu() {
     setComponentMenuOpen(false);
+  }
+
+  function handleDrop(layout, item, event) {
+    console.log("dropped");
+    const componentName = event.dataTransfer.getData("component");
+    console.log(componentName);
+
+    const newItem = {
+      i: crypto.randomUUID(),
+      type: componentName,
+      x: item.x,
+      y: item.y,
+      w: item.w,
+      h: item.h,
+    };
+
+    setLayout((current) => [...current, newItem]);
   }
 
   return (
@@ -95,10 +115,8 @@ function Profile() {
           </div>
         </div>
 
-        <div
-          className="bottom-container"
-          //onClick={() => handleAddSomethingClick()}
-        >
+        <div className="bottom-container">
+          <button onClick={() => handleAddSomethingClick()}>Edit</button>
           <div className="component-container" ref={containerRef}>
             {mounted && (
               <ReactGridLayout
@@ -111,13 +129,16 @@ function Profile() {
                 dragConfig={{
                   bounded: true,
                 }}
+                dropConfig={dropConfig}
+                onDrop={handleDrop}
                 onLayoutChange={(newLayout) => {
                   setLayout(newLayout);
                 }}
                 compactor={horizontalCompactor}
               >
-                <div key="a">a</div>
-                <div key="b">b</div>
+                {layout.map((item) => (
+                  <div key={item.i}>{item.i}</div>
+                ))}
               </ReactGridLayout>
             )}
           </div>
