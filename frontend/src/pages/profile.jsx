@@ -1,5 +1,12 @@
 import "../css/profile.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import {
+  GridLayout,
+  horizontalCompactor,
+  ReactGridLayout,
+  useContainerWidth,
+} from "react-grid-layout";
+import { noCompactor } from "react-grid-layout/core";
 import AlbumSpot from "../components/AlbumSpot";
 import AlbumSearch from "../components/AlbumSearch";
 import ComponentMenu from "../components/ComponentMenu";
@@ -12,7 +19,16 @@ function Profile() {
   const [albums, setAlbums] = useState([Add, Add, Add, Add, Add]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
+
+  const { width, containerRef, mounted } = useContainerWidth();
+  const [containerHeight, setContainerHeight] = useState(0);
+
   const [componentMenuOpen, setComponentMenuOpen] = useState(false);
+  const [components, setComponents] = useState([]);
+  const [layout, setLayout] = useState([
+    { i: "a", x: 0, y: 0, w: 1, h: 9 },
+    { i: "b", x: 1, y: 0, w: 1, h: 9 },
+  ]);
 
   function handleAlbumClick(index) {
     setSelectedAlbum(index);
@@ -81,10 +97,29 @@ function Profile() {
 
         <div
           className="bottom-container"
-          onClick={() => handleAddSomethingClick()}
+          //onClick={() => handleAddSomethingClick()}
         >
-          <div className="add-something">
-            <p>+ Add something!</p>
+          <div className="component-container" ref={containerRef}>
+            {mounted && (
+              <ReactGridLayout
+                layout={layout}
+                width={width}
+                gridConfig={{
+                  cols: 2,
+                  rowHeight: 50,
+                }}
+                dragConfig={{
+                  bounded: true,
+                }}
+                onLayoutChange={(newLayout) => {
+                  setLayout(newLayout);
+                }}
+                compactor={horizontalCompactor}
+              >
+                <div key="a">a</div>
+                <div key="b">b</div>
+              </ReactGridLayout>
+            )}
           </div>
         </div>
       </section>

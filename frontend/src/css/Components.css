@@ -19,3 +19,7 @@
   font-size: var(--h2-font-size);
   font-weight: var(--font-bold);
 }
+
+.components .component img {
+  cursor: move;
+}

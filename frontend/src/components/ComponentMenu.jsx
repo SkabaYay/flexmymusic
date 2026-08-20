@@ -3,12 +3,13 @@ import Components from "./Components";
 import { useState } from "react";
 import Seasons from "../assets/Seasons.svg";
 import Mood from "../assets/Mood.svg";
+import ThreeComps from "../assets/Three Comps.svg";
 import Missing from "../assets/Missing.svg";
 
 const ComponentList = [
   { name: "Seasons", image: Seasons },
-  { name: "Happy", image: Mood },
-  { name: "Sad", image: Mood },
+  { name: "Mood (Happy/Sad/Angry)", image: ThreeComps },
+  { name: "test", image: Missing },
   { name: "test", image: Missing },
 ];
 

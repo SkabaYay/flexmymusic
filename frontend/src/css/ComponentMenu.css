@@ -20,6 +20,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
+  z-index: 100;
 }
 
 .component-menu #close-button {
