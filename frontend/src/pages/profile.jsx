@@ -1,12 +1,10 @@
 import "../css/profile.css";
 import { useState, useRef, useEffect } from "react";
 import {
-  GridLayout,
   horizontalCompactor,
   ReactGridLayout,
   useContainerWidth,
 } from "react-grid-layout";
-import { noCompactor } from "react-grid-layout/core";
 import AlbumSpot from "../components/AlbumSpot";
 import AlbumSearch from "../components/AlbumSearch";
 import ComponentMenu from "../components/ComponentMenu";
@@ -15,24 +13,32 @@ import Test from "../assets/test.jpg";
 
 const numberOfFavorites = 5;
 
+const DROP_CONFIG = {
+  enabled: true,
+  defaultItem: {
+    w: 1,
+    h: 8,
+  },
+};
+
+const GRID_CONFIG = {
+  cols: 2,
+  rowHeight: 50,
+};
+
+const DRAG_CONFIG = {
+  bounded: true,
+};
+
 function Profile() {
   const [albums, setAlbums] = useState([Add, Add, Add, Add, Add]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
   const { width, containerRef, mounted } = useContainerWidth();
-  const [containerHeight, setContainerHeight] = useState(0);
 
   const [componentMenuOpen, setComponentMenuOpen] = useState(false);
-  const [layout, setLayout] = useState([{ i: "b", x: 1, y: 0, w: 1, h: 8.5 }]);
-
-  const dropConfig = {
-    enabled: true,
-    defaultItem: {
-      w: 1,
-      h: 8.5,
-    },
-  };
+  const [layout, setLayout] = useState([{ i: "b", x: 1, y: 0, w: 1, h: 8 }]);
 
   function handleAlbumClick(index) {
     setSelectedAlbum(index);
@@ -40,6 +46,8 @@ function Profile() {
   }
 
   function handleAlbumSelect(imageSrc) {
+    if (selectedAlbum === null) return;
+
     setAlbums((currentAlbums) => {
       const newAlbums = [...currentAlbums];
       newAlbums[selectedAlbum] = imageSrc;
@@ -61,9 +69,9 @@ function Profile() {
   }
 
   function handleDrop(layout, item, event) {
-    console.log("dropped");
     const componentName = event.dataTransfer.getData("component");
-    console.log(componentName);
+
+    if (!componentName) return;
 
     const newItem = {
       i: crypto.randomUUID(),
@@ -75,6 +83,10 @@ function Profile() {
     };
 
     setLayout((current) => [...current, newItem]);
+  }
+
+  function handleLayoutChange(newLayout) {
+    setLayout(newLayout);
   }
 
   return (
@@ -117,27 +129,22 @@ function Profile() {
 
         <div className="bottom-container">
           <button onClick={() => handleAddSomethingClick()}>Edit</button>
+
           <div className="component-container" ref={containerRef}>
-            {mounted && (
+            {mounted && width > 0 && (
               <ReactGridLayout
                 layout={layout}
                 width={width}
-                gridConfig={{
-                  cols: 2,
-                  rowHeight: 50,
-                }}
-                dragConfig={{
-                  bounded: true,
-                }}
-                dropConfig={dropConfig}
+                gridConfig={GRID_CONFIG}
+                dragConfig={DRAG_CONFIG}
+                dropConfig={DROP_CONFIG}
+                isDroppable={true}
                 onDrop={handleDrop}
-                onLayoutChange={(newLayout) => {
-                  setLayout(newLayout);
-                }}
+                onLayoutChange={handleLayoutChange}
                 compactor={horizontalCompactor}
               >
                 {layout.map((item) => (
-                  <div key={item.i}>{item.i}</div>
+                  <div>{item.type || item.i}</div>
                 ))}
               </ReactGridLayout>
             )}
