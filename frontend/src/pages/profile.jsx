@@ -82,7 +82,7 @@ function Profile() {
         <div className="bottom-container">
           <button onClick={() => handleAddSomethingClick()}>Edit</button>
           <div className="component-container">
-            <p>Add something!</p>
+            <p>Add something!!!!!</p>
           </div>
         </div>
       </section>
